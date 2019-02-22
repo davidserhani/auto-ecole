@@ -1,40 +1,31 @@
 package cap.capgemini.aston.entities;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author davidserhani
- *
- */
-@Entity(name = "eleves")
+@Entity(name = "adresses")
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Eleve extends AuditModel {
-
-	private static final long serialVersionUID = 1L;
+public class Adresse {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idEleve")
+	@Column(name = "idAdresse")
 	private Long id;
-	@NotNull
-	@Size(max = 100)
-	private String nom;
-	@NotNull
-	@Size(max = 100)
-	private String prenom;
-	private Date DateDeNaissance;
-	@OneToOne
-	private Adresse adresse;
+	private String codePostale;
+	private String rue;
+	private int numero;
+	private String ville;
+	private String pays;
+	@OneToOne(mappedBy = "adresse")
+	@JsonBackReference
+	private Eleve eleve;
 }
